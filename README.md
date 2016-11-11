@@ -50,6 +50,33 @@ Line 5
 Line 2
 Line 9
 ```
+
+code
+```
+using System;
+ public class GotoTest
+ {
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Line 1");
+        goto line4;
+    line2:
+        Console.WriteLine("Line 2");
+        goto line9;
+    line4:
+        Console.WriteLine("Line 4");
+        Console.WriteLine("Line 5");
+        goto line2;
+        Console.WriteLine("Line 6");
+     line9:
+        Console.WriteLine("Line 9");
+       
+    }
+}
+```
+ผลที่ได้
+![](https://github.com/Freddielove29/LAB-08/blob/master/lab8.1.PNG?raw=true)
+
 ###1.1.2. try…catch…finally
 ประโยค ```try…catch…finally``` ใช้สำหรับการดักจับและจัดการข้อผิดพลาดของโปรแกรม ทั้งขณะทำงาน (Run Time Process) หรือในขณะเริ่มต้นทำงาน (Init Process) โดยเราจะวางคำสั่งที่คาดการว่าจะเกิดข้อผิดพลาดขึ้นไว้ในบล็อกของ ```Try``` และวางส่วนจัดการข้อผิดพลาดไว้ในบล็อกของ ```catch``` และถ้ามีการดำเนินการใดๆ ที่ต้องทำทั้งในกรณีที่มีและไม่มีข้อผิดพลาด ก็จะใส่ไว้ในบล็อกของ ```Finally``` ในคำสั่งนี้สามารถเขียนบล็อกของ ```catch``` ได้หลายบล็อก คำสั่งนี้มีประโยชน์มากในการทำงานกับระบบอินเตอร์เน็ต โดยเฉพาะในกรณีที่การเชื่อมต่อไม่เสถียร เพราะจะช่วยป้องกันการค้างของโปรแกรมของเราขณะเรียกข้อมูลจาก network ได้
 **ตัวอย่าง** โปรแกรมที่ไม่ได้ใช้คำสั่ง ```try…catch…finally```
@@ -143,6 +170,9 @@ public class TryCatch
      }
  }
 ```
+```
+ทำงานปกติ
+```
 ###2.
 ``` csharp
 using System;
@@ -156,6 +186,35 @@ public class TryCatch
         Console.WriteLine(a);
      }
  }
+```
+
+แก้ไข
+```
+using System;
+public class TryCatch
+{
+    static void Main(string[] args)
+    {
+        int a = 0;
+        int b = 10;
+        
+        try
+        {
+
+            b /= a;
+            Console.WriteLine(a);
+        }
+        catch (NullReferenceException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        catch (DivideByZeroException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+    }
+}
 ```
 ###3.
 ``` csharp
@@ -172,6 +231,30 @@ public class TryCatch
         }
      }
  }
+```
+แก้ไข
+```
+using System;
+public class TryCatch
+{
+    static void Main(string[] args)
+    {
+        int value = 800000000;
+        checked // check for overflow
+        {
+            try
+            {
+                int square = value * value;
+                Console.WriteLine("{0} ^ 2 = {1}", value, square);
+            }
+            catch
+            {
+                Console.WriteLine("Error, null object assignment.");
+            }
+        }
+
+    }
+}
 ```
 ###1.1.3. คำสั่ง ```throw```
 
@@ -241,7 +324,11 @@ public class ExceptionLearning
         throw new _____________________();
     }
  }
-````
+```
+
+![](https://github.com/Freddielove29/LAB-08/blob/master/lab8.2.PNG?raw=true)
+![](https://github.com/Freddielove29/LAB-08/blob/master/lab8.3.PNG?raw=true)
+![](https://github.com/Freddielove29/LAB-08/blob/master/lab8.4.PNG?raw=true)
 
 ###เรื่องของ exception นี้ศึกษาเพิ่มเติมได้ [ที่นี่](http://msdn.microsoft.com/en-us/library/vstudio/2w8f0bss%28v=vs.100%29.aspx)
 
@@ -307,6 +394,71 @@ execute next line
 2.	ถ้าค่าที่ผู้ใช้ป้อน น้อยกว่า ค่าที่สุ่มมาได้ ให้พิมพ์ ```“Too Low, You loss!!”```ออกทางหน้าจอ
 3.	ถ้าค่าที่ผู้ใช้ป้อน เท่ากับ ค่าที่สุ่มมาได้ ให้พิมพ์ ```“Okay, You win!!”``` ออกทางหน้าจอ
 
+code
+```
+using System;
+using System.IO;
+public class IfLearning
+{
+    public static void Main()
+    {
+        Console.WriteLine("Pleace Number 0 to 1 ");
+        Console.Write("Number input : ");
+        double a = Convert.ToDouble(Console.ReadLine());
+        Random random = new Random();
+        double randomNumber1 = random.Next(0, 1);
+        Console.WriteLine("Random Number = {0} ", randomNumber1);
+        if (a > randomNumber1)
+        {
+            Console.WriteLine("Too Hight, You loss!!");
+        }
+        if (a < randomNumber1)
+        {
+            Console.WriteLine("Too Low, You loss!!");
+        }
+        if (a == randomNumber1)
+            Console.WriteLine("Okay, You win!!");
+
+
+        Console.WriteLine("---------------------------");
+        Console.Write("Number input round2: ");
+        double b = Convert.ToDouble(Console.ReadLine());
+        Random random1 = new Random();
+        double randomNumber2 = random.Next(0, 1);
+        Console.WriteLine("Random Number = {0} ", randomNumber2);
+
+        if (b > randomNumber2)
+        {
+            Console.WriteLine("Too Hight, You loss!!");
+        }
+        if (b < randomNumber2)
+        {
+            Console.WriteLine("Too Low, You loss!!");
+        }
+        if (b == randomNumber2)
+            Console.WriteLine("Okay, You win!!");
+
+        Console.WriteLine("---------------------------");
+        Console.Write("Number input round3: ");
+        double c = Convert.ToDouble(Console.ReadLine());
+        Random random2 = new Random();
+        double randomNumber3 = random.Next(0, 1);
+        Console.WriteLine("Random Number = {0} ", randomNumber3);
+
+        if (c > randomNumber3)
+        {
+            Console.WriteLine("Too Hight, You loss!!");
+        }
+        if (c < randomNumber3)
+        {
+            Console.WriteLine("Too Low, You loss!!");
+        }
+        if (c == randomNumber3)
+            Console.WriteLine("Okay, You win!!");
+    }
+}
+```
+![](https://github.com/Freddielove29/LAB-08/blob/master/lab8.5.PNG?raw=true)
 ###1.2.2.	คำสั่ง ```if…else```
 
 เงื่อนไขที่เป็นไปได้ของคำสั่งในการตัดสินใจมีสองทางเสมอ (true และ false) ที่ผ่านมา เราจะเห็นว่า คำสั่ง if เป็นคำสั่งที่เลือกทำเพียงทางเดียว (เฉพาะในกรณีที่เงื่อนไขเป็น true เท่านั้น) หากต้องการให้โปรแกรมทำงานทั้งกรณีที่เงื่อนไขเป็น true และ false เราต้องใช้คำสั่ง if…else โดยมีรูปแบบดังนี้
@@ -446,7 +598,38 @@ Grade C
 0-49|	F
 
 3. รูปแบบการพิมพ์คือ score: [sss] grade: [gg] เมื่อ sss คือคะแนน และ gg คือ เกรดที่ได้
+code
+```
+using System;
+using System.IO;
+public class IfLearning
+{
+    public static void Main()
+    {
+        Random random = new Random();
+        float point = random.Next(0, 100);
+        Console.WriteLine("score: [{0}] ", point);
+        if (point < 50)
+            Console.WriteLine("Grade: [F]");
+        else if (point == 50 | point < 55)
+            Console.WriteLine("Grade: [D]");
+        else if (point == 55 | point < 60)
+            Console.WriteLine("Grade: [D+]");
+        else if (point == 60 | point < 65)
+            Console.WriteLine("Grade: [C]");
+        else if (point == 65 | point < 70)
+            Console.WriteLine("Grade: [C+]");
+        else if (point == 70 | point < 75)
+            Console.WriteLine("Grade: [B]");
+        else if (point == 75 | point < 80)
+            Console.WriteLine("Grade: [B+]");
+        else
+            Console.WriteLine("grade: [A]");
+    }
+}
+```
 
+![](https://github.com/Freddielove29/LAB-08/blob/master/lab8.6.PNG?raw=true)
 ###1.2.5. คำสั่ง ```switch```
 
 ในกรณีที่มีทางเลือกในการตัดสินใจเป็นจำนวนมาก ไม่เป็นการสะดวกที่จะเขียนเป็นโปรแกรมยาวๆ เช่นในกรณีของคำสั่ง if…else…if ภาษา C# มีคำสั่งตัดสินใจเลือกทิศทางของโปรแกรมแบบหลายทางเลือกให้ใช้คือคำสั่ง switch ซึ่งรูปแบบการใช้งาน ดังนี้
@@ -524,7 +707,60 @@ fri|	Friday	|Blue
 sat|	Saturday	|Purple
 อื่นๆ|	 ---|	---
 
+code
+```
+using System;
+using System.IO;
+public class switchLearning
+{
+    public static void Main()
+    {
+        Console.Write("Input Day (sun,mon , tue, wed ,thu,fri ,sat) : ");
+        string date = Console.ReadLine();
+        string message;
+        string message1;
+        switch (date)
+        {
+            case "sun":
+                message = "Sunday";
+                message1 = "Color Red";
+                break;
+            case "mon":
+                message = "Monday";
+                message1 = "Color Yellow";
+                break;
+            case "tue":
+                message = "tuesday";
+                message1 = "Color Pink";
+                break;
+            case "wed":
+                message = "Wednesday";
+                message1 = "Color Green";
+                break;
+            case "thu":
+                message = "Thursday";
+                message1 = "Color Orange";
+                break;
+            case "fri":
+                message = "Friday";
+                message1 = "Color Light blue";
+                break;
+            case "sat":
+                message = "Satday";
+                message1 = "Color Purple";
+break;
+            default:
+                message = "---";
+                message1 = "---";
+                break;
+        }
 
+        Console.WriteLine(message);
+        Console.WriteLine(message1);
+        
+    }
+    ```
+    ![](https://github.com/Freddielove29/LAB-08/blob/master/lab8.7.PNG?raw=true)
 ##Reference
 เนื้อหาในส่วนนี้เป็นอ้างอิงสำหรับการเขียนโปรแกรม
 
